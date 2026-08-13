@@ -56,6 +56,7 @@
     <!-- Desktop Nav -->
     <nav class="hidden lg:flex items-center gap-10">
       <a href="#gallery" class="nav-link header-nav-link">גלריה</a>
+      <a href="#vision-board" class="nav-link header-nav-link">בנו את הסגנון שלכם</a>
       <a href="#about" class="nav-link header-nav-link">אודות</a>
       <a href="#packages" class="nav-link header-nav-link">חבילות צילום</a>
       <a href="#testimonials" class="nav-link header-nav-link">המלצות</a>
@@ -78,6 +79,7 @@
   <div id="mobile-menu" class="lg:hidden fixed inset-0 top-20 bg-cream/98 backdrop-blur-sm">
     <nav class="flex flex-col items-center justify-center h-full gap-8 -mt-20 text-xl">
       <a href="#gallery" class="mobile-nav-link">גלריה</a>
+      <a href="#vision-board" class="mobile-nav-link">בנו את הסגנון שלכם</a>
       <a href="#about" class="mobile-nav-link">אודות</a>
       <a href="#packages" class="mobile-nav-link">חבילות צילום</a>
       <a href="#testimonials" class="mobile-nav-link">המלצות</a>
@@ -193,6 +195,68 @@
   </button>
   <img id="lightbox-img" src="" alt="" class="relative max-w-full max-h-[85vh] rounded-lg shadow-2xl object-contain">
 </div>
+
+<!-- ================= VISION BOARD BUILDER ================= -->
+<section id="vision-board" class="py-24 lg:py-32 bg-beige/40">
+  <div class="max-w-6xl mx-auto px-5 sm:px-8">
+
+    <div class="text-center max-w-2xl mx-auto mb-14" data-reveal>
+      <span class="section-label">בנו את הסגנון שלכם</span>
+      <h2 class="section-title">לוח ההשראה האישי שלכם</h2>
+      <p class="section-subtitle">בחרו עד 5 סגנונות שמדברים אליכם, וקבלו תצוגה מקדימה של האווירה שנעצב יחד — ושלחו לי אותה ישירות לוואטסאפ.</p>
+    </div>
+
+    <!-- Style tiles grid -->
+    <div id="vision-grid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-5 mb-6" data-reveal></div>
+
+    <p class="text-center text-sm text-charcoal-light mb-16 transition-opacity duration-300" id="vision-limit-note">
+      נבחרו <span id="vision-count" class="font-semibold text-charcoal">0</span>/5 סגנונות
+    </p>
+
+    <!-- Live moodboard canvas -->
+    <div class="grid lg:grid-cols-5 gap-8 items-start" data-reveal>
+
+      <div class="lg:col-span-3">
+        <div id="moodboard-card" class="moodboard-card">
+
+          <!-- Empty state -->
+          <div id="moodboard-empty" class="moodboard-empty">
+            <svg class="w-10 h-10 mb-3 text-gold-light" fill="none" stroke="currentColor" stroke-width="1.4" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="10" rx="1.5"/><rect x="3" y="13" width="7" height="8" rx="1.5"/><rect x="14" y="16" width="7" height="5" rx="1.5"/></svg>
+            <p class="text-charcoal-light text-sm max-w-xs">בחרו סגנונות מהרשימה למעלה כדי לראות כאן את לוח ההשראה האישי שלכם</p>
+          </div>
+
+          <!-- Filled state -->
+          <div id="moodboard-filled" class="hidden">
+            <div class="flex items-center justify-between mb-5">
+              <h3 class="font-serif text-xl">הלוח שלכם</h3>
+              <button id="moodboard-clear" type="button" class="text-xs text-charcoal-light hover:text-gold transition underline underline-offset-2">נקו הכל</button>
+            </div>
+            <div id="moodboard-swatches" class="moodboard-swatches"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="lg:col-span-2 lg:sticky lg:top-28">
+        <div class="bg-white rounded-2xl shadow-lg p-6 sm:p-8">
+          <span class="section-label !mb-3">האבחנה שלנו</span>
+          <p id="vision-summary" class="font-serif text-xl sm:text-2xl leading-snug text-charcoal mb-6">
+            הסגנון שלכם עוד לא הצטייר — התחילו לבחור למעלה ✨
+          </p>
+          <a id="vision-whatsapp" href="#" target="_blank" rel="noopener" class="vision-whatsapp-btn is-disabled">
+            <span class="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center shrink-0">
+              <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.29-1.39a9.87 9.87 0 004.75 1.21h.01c5.46 0 9.9-4.45 9.9-9.91C21.96 6.45 17.5 2 12.04 2zm0 18.14a8.2 8.2 0 01-4.19-1.15l-.3-.18-3.13.82.84-3.06-.2-.31a8.2 8.2 0 01-1.26-4.35c0-4.55 3.7-8.24 8.25-8.24 4.55 0 8.24 3.7 8.24 8.24 0 4.55-3.7 8.23-8.25 8.23zm4.52-6.16c-.25-.12-1.47-.72-1.7-.81-.23-.08-.39-.12-.56.12-.17.25-.64.81-.78.97-.14.17-.29.19-.54.06-.25-.12-1.04-.38-1.98-1.22-.73-.65-1.22-1.45-1.37-1.7-.14-.25-.02-.38.11-.5.11-.11.25-.29.37-.43.12-.14.16-.25.25-.41.08-.17.04-.31-.02-.44-.06-.12-.56-1.35-.77-1.84-.2-.48-.41-.42-.56-.42-.14-.01-.31-.01-.48-.01-.17 0-.44.06-.67.31-.23.25-.87.85-.87 2.08 0 1.22.89 2.4 1.02 2.57.12.17 1.75 2.67 4.24 3.75.59.26 1.06.41 1.42.52.6.19 1.14.16 1.57.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.08.14-1.18-.06-.11-.23-.17-.48-.29z"/></svg>
+            </span>
+            <span>
+              <span class="block font-medium">שליחת לוח ההשראה בוואטסאפ</span>
+              <span id="vision-whatsapp-sub" class="block text-sm text-white/85">בחרו סגנון אחד לפחות כדי לשלוח</span>
+            </span>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
 
 <!-- ================= ABOUT ================= -->
 <section id="about" class="py-24 lg:py-32 bg-beige/40">
@@ -530,6 +594,7 @@
         <p class="font-medium text-cream mb-4">ניווט מהיר</p>
         <ul class="space-y-2 text-sm">
           <li><a href="#gallery" class="footer-link">גלריה</a></li>
+          <li><a href="#vision-board" class="footer-link">בנו את הסגנון שלכם</a></li>
           <li><a href="#about" class="footer-link">אודות</a></li>
           <li><a href="#packages" class="footer-link">חבילות צילום</a></li>
           <li><a href="#testimonials" class="footer-link">המלצות</a></li>
