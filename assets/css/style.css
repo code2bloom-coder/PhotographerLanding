@@ -417,20 +417,51 @@ section[id] {
   transform: none;
 }
 
-/* ================= IMAGES ================= */
-.photo-filter {
-  filter: sepia(0.12) saturate(0.92) contrast(1.02);
-  transition: transform 0.6s ease, filter 0.6s ease;
-}
+/* ================= IMAGE PLACEHOLDERS ================= */
+/* No photos are used yet — these render an elegant gradient + icon
+   card in place of a real photograph. Swap in real <img> tags (see
+   git history for the previous markup) once real photos are ready. */
 .img-hover-zoom {
   position: relative;
 }
-.img-hover-zoom img {
-  will-change: transform;
+.photo-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  background-image: var(--ph-gradient);
+  transition: transform 0.6s ease;
 }
-.img-hover-zoom:hover img {
+.img-hover-zoom:hover .photo-placeholder {
   transform: scale(1.06);
-  filter: sepia(0.05) saturate(1.05) contrast(1.03);
+}
+.photo-placeholder .ph-icon {
+  color: rgba(255, 255, 255, 0.9);
+  opacity: 0.9;
+}
+.photo-placeholder .ph-label {
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+.avatar-initials {
+  width: 48px;
+  height: 48px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-family: 'Frank Ruhl Libre', serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  background-image: var(--ph-gradient);
+  flex-shrink: 0;
 }
 
 /* ================= GALLERY ================= */
@@ -458,63 +489,28 @@ section[id] {
   position: relative;
   border-radius: 1rem;
   overflow: hidden;
-  cursor: pointer;
   box-shadow: 0 6px 18px rgba(43, 39, 35, 0.08);
   opacity: 1;
   transform: scale(1);
-  transition: opacity 0.4s ease, transform 0.4s ease;
+  transition: opacity 0.4s ease, transform 0.4s ease, box-shadow 0.3s ease;
 }
 .gallery-item.is-hidden {
   display: none;
 }
-.gallery-item img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  transition: transform 0.6s ease, filter 0.6s ease;
+.gallery-item:hover {
+  box-shadow: 0 14px 28px rgba(43, 39, 35, 0.14);
 }
-.gallery-item .gallery-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, rgba(43,39,35,0) 40%, rgba(43,39,35,0.75) 100%);
-  opacity: 0;
-  transition: opacity 0.4s ease;
-  display: flex;
-  align-items: flex-end;
-  padding: 1.1rem;
+.gallery-item:hover .photo-placeholder {
+  transform: scale(1.06);
 }
-.gallery-item:hover .gallery-overlay {
-  opacity: 1;
-}
-.gallery-item:hover img {
-  transform: scale(1.08);
-  filter: sepia(0.05) saturate(1.05);
+.gallery-item .ph-icon {
+  width: 32px;
+  height: 32px;
 }
 .gallery-item .gallery-tag {
   color: #fff;
   font-size: 0.85rem;
   font-weight: 500;
-}
-.gallery-item .zoom-icon {
-  position: absolute;
-  top: 0.9rem;
-  left: 0.9rem;
-  width: 34px;
-  height: 34px;
-  border-radius: 999px;
-  background: rgba(255,255,255,0.9);
-  color: var(--charcoal);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  transform: translateY(-6px);
-  transition: all 0.35s ease;
-}
-.gallery-item:hover .zoom-icon {
-  opacity: 1;
-  transform: translateY(0);
 }
 
 /* ================= ABOUT ================= */
@@ -705,11 +701,6 @@ section[id] {
   border-color: var(--gold-light);
   color: var(--charcoal);
   transform: translateY(-3px);
-}
-
-/* ================= LIGHTBOX ================= */
-#lightbox.is-open {
-  display: flex;
 }
 
 /* ================= BACK TO TOP ================= */

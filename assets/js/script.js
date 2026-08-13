@@ -1,7 +1,7 @@
 /* =========================================================
    Maya Cohen Photography — Landing Page Behaviors
-   Sections: header, mobile menu, scroll reveal, gallery
-   filter + lightbox, testimonials carousel, contact form.
+   Sections: header, mobile menu, scroll reveal, gallery filter,
+   vision board builder, testimonials carousel, contact form.
    ========================================================= */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -78,41 +78,52 @@ function initScrollReveal() {
   items.forEach((el) => observer.observe(el));
 }
 
-/* ---------------- Gallery data + rendering + filter + lightbox ---------------- */
-const GALLERY_ITEMS = [
-  { category: 'family', seed: 'gallery-family-1', tag: 'צילומי משפחה', alt: 'צילום משפחתי בטבע' },
-  { category: 'newborn', seed: 'gallery-newborn-1', tag: 'ניו-בורן', alt: 'צילום תינוק רך' },
-  { category: 'portrait', seed: 'gallery-portrait-1', tag: 'פורטרט', alt: 'פורטרט אמנותי באור טבעי' },
-  { category: 'event', seed: 'gallery-event-1', tag: 'אירוע', alt: 'רגע מרגש מאירוע משפחתי' },
-  { category: 'family', seed: 'gallery-family-2', tag: 'צילומי משפחה', alt: 'משפחה מחייכת בסטודיו' },
-  { category: 'portrait', seed: 'gallery-portrait-2', tag: 'פורטרט', alt: 'פורטרט שחור-לבן' },
-  { category: 'newborn', seed: 'gallery-newborn-2', tag: 'ניו-בורן', alt: 'תינוק ישן בעדינות' },
-  { category: 'event', seed: 'gallery-event-2', tag: 'אירוע', alt: 'ריקוד באירוע חגיגי' },
-  { category: 'family', seed: 'gallery-family-3', tag: 'צילומי משפחה', alt: 'הורים וילדים בחוץ' },
-  { category: 'portrait', seed: 'gallery-portrait-3', tag: 'פורטרט', alt: 'פורטרט קרוב עם אור רך' },
-  { category: 'event', seed: 'gallery-event-3', tag: 'אירוע', alt: 'חיבוק משפחתי חם' },
-  { category: 'newborn', seed: 'gallery-newborn-3', tag: 'ניו-בורן', alt: 'ידיים קטנות של תינוק' },
-];
+/* ---------------- Gallery data + rendering + filter ---------------- */
+/* No real photos yet, so each slot renders a category-coded gradient
+   placeholder instead. Swap in real <img> tags once photos are ready. */
+const GALLERY_CATEGORY_META = {
+  family: {
+    label: 'צילומי משפחה',
+    from: '#8C7B63', to: '#4A443D',
+    icon: '<path stroke-linecap="round" stroke-linejoin="round" d="M3 11l9-8 9 8M5 10v10h5v-6h4v6h5V10"/>',
+  },
+  newborn: {
+    label: 'ניו-בורן',
+    from: '#F3E4D7', to: '#D9BEA8',
+    icon: '<path stroke-linecap="round" stroke-linejoin="round" d="M12 3a5 5 0 015 5c0 3-2 4-2 7H9c0-3-2-4-2-7a5 5 0 015-5z"/><path stroke-linecap="round" d="M9 19h6"/>',
+  },
+  portrait: {
+    label: 'פורטרטים',
+    from: '#C9A66B', to: '#8C6B3F',
+    icon: '<rect x="3" y="7" width="18" height="13" rx="2"/><path stroke-linecap="round" stroke-linejoin="round" d="M8 7l1.5-3h5L16 7"/><circle cx="12" cy="13.5" r="3.2"/>',
+  },
+  event: {
+    label: 'אירועים',
+    from: '#B4894F', to: '#2B2723',
+    icon: '<path stroke-linecap="round" stroke-linejoin="round" d="M12 2l1.8 4.6L18 8l-3.6 2.9L15.5 15 12 12.6 8.5 15l1.1-4.1L6 8l4.2-1.4L12 2z"/>',
+  },
+};
 
-let currentFilteredSrcs = [];
-let currentLightboxIndex = 0;
+const GALLERY_ITEMS = [
+  'family', 'newborn', 'portrait', 'event',
+  'family', 'portrait', 'newborn', 'event',
+  'family', 'portrait', 'event', 'newborn',
+];
 
 function initGallery() {
   const grid = document.getElementById('gallery-grid');
 
-  grid.innerHTML = GALLERY_ITEMS.map((item, i) => `
-    <div class="gallery-item aspect-[4/5]" data-category="${item.category}" data-index="${i}">
-      <img src="https://picsum.photos/seed/${item.seed}/700/900" alt="${item.alt}" class="photo-filter" loading="lazy">
-      <span class="zoom-icon">
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-          <circle cx="11" cy="11" r="7"/><path stroke-linecap="round" d="M21 21l-4.35-4.35M11 8v6M8 11h6"/>
-        </svg>
-      </span>
-      <div class="gallery-overlay">
-        <span class="gallery-tag">${item.tag}</span>
+  grid.innerHTML = GALLERY_ITEMS.map((category) => {
+    const meta = GALLERY_CATEGORY_META[category];
+    return `
+    <div class="gallery-item aspect-[4/5]" data-category="${category}">
+      <div class="photo-placeholder" style="--ph-gradient: linear-gradient(155deg, ${meta.from}, ${meta.to});">
+        <svg class="ph-icon" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24">${meta.icon}</svg>
+        <span class="gallery-tag">${meta.label}</span>
       </div>
     </div>
-  `).join('');
+  `;
+  }).join('');
 
   const filterButtons = document.querySelectorAll('.filter-btn');
   const galleryItems = () => grid.querySelectorAll('.gallery-item');
@@ -129,69 +140,6 @@ function initGallery() {
       });
     });
   });
-
-  grid.addEventListener('click', (e) => {
-    const item = e.target.closest('.gallery-item');
-    if (!item) return;
-    const visibleItems = Array.from(galleryItems()).filter((el) => !el.classList.contains('is-hidden'));
-    currentFilteredSrcs = visibleItems.map((el) => ({
-      src: el.querySelector('img').src,
-      alt: el.querySelector('img').alt,
-    }));
-    currentLightboxIndex = visibleItems.indexOf(item);
-    openLightbox();
-  });
-
-  initLightboxControls();
-}
-
-function initLightboxControls() {
-  const lightbox = document.getElementById('lightbox');
-  const backdrop = document.getElementById('lightbox-backdrop');
-  const closeBtn = document.getElementById('lightbox-close');
-  const prevBtn = document.getElementById('lightbox-prev');
-  const nextBtn = document.getElementById('lightbox-next');
-
-  // Grid is RTL: item 0 renders top-right, later items flow leftward.
-  // So the right-side "prev" button/key steps to a lower index, and the
-  // left-side "next" button/key steps to a higher index.
-  closeBtn.addEventListener('click', closeLightbox);
-  backdrop.addEventListener('click', closeLightbox);
-  prevBtn.addEventListener('click', () => stepLightbox(-1));
-  nextBtn.addEventListener('click', () => stepLightbox(1));
-
-  document.addEventListener('keydown', (e) => {
-    if (!lightbox.classList.contains('is-open')) return;
-    if (e.key === 'Escape') closeLightbox();
-    if (e.key === 'ArrowRight') stepLightbox(-1);
-    if (e.key === 'ArrowLeft') stepLightbox(1);
-  });
-}
-
-function openLightbox() {
-  const lightbox = document.getElementById('lightbox');
-  updateLightboxImage();
-  lightbox.classList.add('is-open');
-  document.body.classList.add('overflow-hidden');
-}
-
-function closeLightbox() {
-  const lightbox = document.getElementById('lightbox');
-  lightbox.classList.remove('is-open');
-  document.body.classList.remove('overflow-hidden');
-}
-
-function stepLightbox(dir) {
-  const len = currentFilteredSrcs.length;
-  currentLightboxIndex = (currentLightboxIndex + dir + len) % len;
-  updateLightboxImage();
-}
-
-function updateLightboxImage() {
-  const img = document.getElementById('lightbox-img');
-  const current = currentFilteredSrcs[currentLightboxIndex];
-  img.src = current.src;
-  img.alt = current.alt;
 }
 
 /* ---------------- Vision Board / Moodboard Builder ---------------- */

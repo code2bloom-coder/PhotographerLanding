@@ -133,13 +133,20 @@
     <div class="order-1 lg:order-2 relative" data-reveal data-reveal-delay="150">
       <div class="grid grid-cols-2 gap-4 sm:gap-5">
         <div class="col-span-2 rounded-2xl overflow-hidden shadow-xl img-hover-zoom h-56 sm:h-72">
-          <img src="https://picsum.photos/seed/photostudio-hero1/900/600" alt="צילום משפחתי בסטודיו" class="w-full h-full object-cover photo-filter" loading="lazy">
+          <div class="photo-placeholder" style="--ph-gradient: linear-gradient(155deg, #3A332C, #B4894F);">
+            <svg class="ph-icon w-10 h-10" fill="none" stroke="currentColor" stroke-width="1.4" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path stroke-linecap="round" stroke-linejoin="round" d="M8 7l1.5-3h5L16 7"/><circle cx="12" cy="13.5" r="3.5"/></svg>
+            <span class="ph-label">התמונות האמיתיות שלנו — בקרוב</span>
+          </div>
         </div>
         <div class="rounded-2xl overflow-hidden shadow-xl img-hover-zoom h-40 sm:h-56">
-          <img src="https://picsum.photos/seed/photostudio-hero2/600/700" alt="פורטרט אמנותי" class="w-full h-full object-cover photo-filter" loading="lazy">
+          <div class="photo-placeholder" style="--ph-gradient: linear-gradient(155deg, #EEE4D6, #C9A66B);">
+            <svg class="ph-icon w-8 h-8" fill="none" stroke="currentColor" stroke-width="1.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21c-4-4-8-7.5-8-12a5 5 0 019-3 5 5 0 019 3c0 4.5-4 8-8 12z"/></svg>
+          </div>
         </div>
         <div class="rounded-2xl overflow-hidden shadow-xl img-hover-zoom h-40 sm:h-56">
-          <img src="https://picsum.photos/seed/photostudio-hero3/600/700" alt="צילום ניו-בורן" class="w-full h-full object-cover photo-filter" loading="lazy">
+          <div class="photo-placeholder" style="--ph-gradient: linear-gradient(155deg, #E7D6B8, #8C6B3F);">
+            <svg class="ph-icon w-8 h-8" fill="none" stroke="currentColor" stroke-width="1.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3a5 5 0 015 5c0 3-2 4-2 7H9c0-3-2-4-2-7a5 5 0 015-5z"/><path stroke-linecap="round" d="M9 19h6"/></svg>
+          </div>
         </div>
       </div>
       <div class="hidden sm:flex absolute -bottom-8 -right-8 items-center gap-3 bg-white/95 backdrop-blur rounded-2xl shadow-2xl px-6 py-4">
@@ -180,21 +187,6 @@
     <div id="gallery-grid" class="grid grid-cols-2 md:grid-cols-3 gap-4 sm:gap-5"></div>
   </div>
 </section>
-
-<!-- Lightbox -->
-<div id="lightbox" class="fixed inset-0 z-[100] hidden items-center justify-center p-4 sm:p-10">
-  <div id="lightbox-backdrop" class="absolute inset-0 bg-charcoal/95"></div>
-  <button id="lightbox-close" aria-label="סגירה" class="absolute top-5 left-5 sm:top-8 sm:left-8 z-10 w-11 h-11 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition">
-    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M6 18L18 6M6 6l12 12"/></svg>
-  </button>
-  <button id="lightbox-prev" aria-label="הקודם" class="absolute top-1/2 -translate-y-1/2 right-3 sm:right-8 z-10 w-11 h-11 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition">
-    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
-  </button>
-  <button id="lightbox-next" aria-label="הבא" class="absolute top-1/2 -translate-y-1/2 left-3 sm:left-8 z-10 w-11 h-11 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition">
-    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 5l-7 7 7 7"/></svg>
-  </button>
-  <img id="lightbox-img" src="" alt="" class="relative max-w-full max-h-[85vh] rounded-lg shadow-2xl object-contain">
-</div>
 
 <!-- ================= VISION BOARD BUILDER ================= -->
 <section id="vision-board" class="py-24 lg:py-32 bg-beige/40">
@@ -264,7 +256,10 @@
 
     <div class="relative order-2 lg:order-1" data-reveal>
       <div class="rounded-2xl overflow-hidden shadow-2xl aspect-[4/5] max-w-md mx-auto lg:mx-0 img-hover-zoom">
-        <img src="https://picsum.photos/seed/photostudio-portrait/700/900" alt="מאיה כהן, צלמת" class="w-full h-full object-cover photo-filter" loading="lazy">
+        <div class="photo-placeholder" style="--ph-gradient: linear-gradient(155deg, #C9A66B, #2B2723);">
+          <svg class="ph-icon w-12 h-12" fill="none" stroke="currentColor" stroke-width="1.3" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path stroke-linecap="round" stroke-linejoin="round" d="M8 7l1.5-3h5L16 7"/><circle cx="12" cy="13.5" r="3.8"/></svg>
+          <span class="ph-label">תמונת הצלמת — בקרוב</span>
+        </div>
       </div>
       <div class="absolute -top-6 -left-6 w-32 h-32 rounded-2xl bg-gold-soft -z-10 hidden sm:block"></div>
       <div class="absolute -bottom-6 -right-6 sm:right-auto sm:left-10 bg-white rounded-2xl shadow-xl px-6 py-5 text-center">
@@ -405,7 +400,7 @@
                 "מאיה תפסה רגעים שלא ידענו שאנחנו צריכים. הילדים הרגישו בנוח לגמרי, והתוצאה הסופית פשוט מרגשת אותנו מחדש בכל פעם שאנחנו מסתכלים באלבום."
               </p>
               <div class="flex items-center justify-center gap-3">
-                <img src="https://picsum.photos/seed/client1/80/80" class="w-12 h-12 rounded-full object-cover" loading="lazy" alt="לקוחה">
+                <span class="avatar-initials" style="--ph-gradient: linear-gradient(155deg, #C9A66B, #8C6B3F);" aria-hidden="true">נ.א</span>
                 <div class="text-right">
                   <p class="font-medium">נועה ואיתן לוי</p>
                   <p class="text-xs text-cream/60">צילומי משפחה</p>
@@ -427,7 +422,7 @@
                 "הצילומים של הניו-בורן יצאו מדהימים. מאיה הייתה סבלנית, רגועה ומקצועית לאורך כל הסשן. ממליצה בחום לכל זוג טרי!"
               </p>
               <div class="flex items-center justify-center gap-3">
-                <img src="https://picsum.photos/seed/client2/80/80" class="w-12 h-12 rounded-full object-cover" loading="lazy" alt="לקוחה">
+                <span class="avatar-initials" style="--ph-gradient: linear-gradient(155deg, #B4894F, #4A443D);" aria-hidden="true">ש.ב</span>
                 <div class="text-right">
                   <p class="font-medium">שירה בן־דוד</p>
                   <p class="text-xs text-cream/60">צילומי ניו-בורן</p>
@@ -449,7 +444,7 @@
                 "שכרנו את מאיה לצילומי האירוע המשפחתי שלנו וזו הייתה ההחלטה הכי טובה. התמונות תפסו בדיוק את האווירה והרגש של הערב."
               </p>
               <div class="flex items-center justify-center gap-3">
-                <img src="https://picsum.photos/seed/client3/80/80" class="w-12 h-12 rounded-full object-cover" loading="lazy" alt="לקוח">
+                <span class="avatar-initials" style="--ph-gradient: linear-gradient(155deg, #8C7B63, #2B2723);" aria-hidden="true">מ.א</span>
                 <div class="text-right">
                   <p class="font-medium">משפחת אברהמי</p>
                   <p class="text-xs text-cream/60">צילומי אירועים</p>
