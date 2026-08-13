@@ -154,15 +154,17 @@ section[id] {
   transform: translateY(-1px);
   filter: brightness(1.04);
 }
-/* A soft warm tint per row (echoing the vision-board tile palette)
-   instead of a flat white list — adds a bit of color/personality
-   without straying from the site's neutral-warm brand. */
-.mobile-nav-link:nth-of-type(1) { background: #F5DFC7; }
-.mobile-nav-link:nth-of-type(2) { background: #E8D5DE; }
-.mobile-nav-link:nth-of-type(3) { background: #DCE2D0; }
-.mobile-nav-link:nth-of-type(4) { background: #F0E0BE; }
-.mobile-nav-link:nth-of-type(5) { background: #EBD2C7; }
-.mobile-nav-link:nth-of-type(6) { background: #E4CBA8; }
+/* A distinct warm color per row (echoing the vision-board tile
+   palette) — the first pass used pale pastels that read as "white
+   with a hint of tint" and didn't register as color at all. These
+   are deliberately more saturated so each row is unmistakably its
+   own color while staying in the site's warm/earthy family. */
+.mobile-nav-link:nth-of-type(1) { background: #DC9468; }
+.mobile-nav-link:nth-of-type(2) { background: #D397A8; }
+.mobile-nav-link:nth-of-type(3) { background: #8FA075; color: #fff; }
+.mobile-nav-link:nth-of-type(4) { background: #D6AC4E; }
+.mobile-nav-link:nth-of-type(5) { background: #CC7E63; color: #fff; }
+.mobile-nav-link:nth-of-type(6) { background: #B98A52; color: #fff; }
 
 /* ================= BUTTONS ================= */
 .btn-primary {
