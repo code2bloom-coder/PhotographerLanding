@@ -56,7 +56,6 @@
     <!-- Desktop Nav -->
     <nav class="hidden xl:flex items-center gap-7">
       <a href="#gallery" class="nav-link header-nav-link">גלריה</a>
-      <a href="#vision-board" class="nav-link header-nav-link">בנו את הסגנון שלכם</a>
       <a href="#about" class="nav-link header-nav-link">אודות</a>
       <a href="#packages" class="nav-link header-nav-link">חבילות צילום</a>
       <a href="#testimonials" class="nav-link header-nav-link">המלצות</a>
@@ -80,7 +79,6 @@
     <div class="mobile-menu-glow" aria-hidden="true"></div>
     <nav class="relative flex flex-col items-center justify-center h-full gap-8 -mt-20 text-xl">
       <a href="#gallery" class="mobile-nav-link">גלריה</a>
-      <a href="#vision-board" class="mobile-nav-link">בנו את הסגנון שלכם</a>
       <a href="#about" class="mobile-nav-link">אודות</a>
       <a href="#packages" class="mobile-nav-link">חבילות צילום</a>
       <a href="#testimonials" class="mobile-nav-link">המלצות</a>
@@ -132,25 +130,61 @@
 
     <!-- Image grid -->
     <div class="lg:order-2 relative" data-reveal data-reveal-delay="150">
-      <div class="grid grid-cols-2 gap-4 sm:gap-5">
-        <div class="col-span-2 rounded-2xl overflow-hidden shadow-xl img-hover-zoom h-56 sm:h-72">
-          <div class="photo-placeholder" style="--ph-gradient: linear-gradient(155deg, #3A332C, #B4894F);">
-            <svg class="ph-icon w-10 h-10" fill="none" stroke="currentColor" stroke-width="1.4" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path stroke-linecap="round" stroke-linejoin="round" d="M8 7l1.5-3h5L16 7"/><circle cx="12" cy="13.5" r="3.5"/></svg>
-            <span class="ph-label">התמונות האמיתיות שלנו — בקרוב</span>
-          </div>
+      <div class="hero-camera-wrap">
+
+        <!-- Floating accent shapes -->
+        <div class="hc-float hc-float-1" aria-hidden="true">
+          <svg viewBox="0 0 44 44"><rect x="3" y="3" width="38" height="38" rx="8"/><path d="M12 27l7-8 5 5 5-9 5 12H12z"/></svg>
         </div>
-        <div class="rounded-2xl overflow-hidden shadow-xl img-hover-zoom h-40 sm:h-56">
-          <div class="photo-placeholder" style="--ph-gradient: linear-gradient(155deg, #EEE4D6, #C9A66B);">
-            <svg class="ph-icon w-8 h-8" fill="none" stroke="currentColor" stroke-width="1.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21c-4-4-8-7.5-8-12a5 5 0 019-3 5 5 0 019 3c0 4.5-4 8-8 12z"/></svg>
-          </div>
+        <div class="hc-float hc-float-2" aria-hidden="true">
+          <svg viewBox="0 0 44 44"><circle cx="22" cy="22" r="19"/><circle cx="22" cy="22" r="8" fill="none" stroke-width="2.4"/></svg>
         </div>
-        <div class="rounded-2xl overflow-hidden shadow-xl img-hover-zoom h-40 sm:h-56">
-          <div class="photo-placeholder" style="--ph-gradient: linear-gradient(155deg, #E7D6B8, #8C6B3F);">
-            <svg class="ph-icon w-8 h-8" fill="none" stroke="currentColor" stroke-width="1.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3a5 5 0 015 5c0 3-2 4-2 7H9c0-3-2-4-2-7a5 5 0 015-5z"/><path stroke-linecap="round" d="M9 19h6"/></svg>
-          </div>
+        <div class="hc-float hc-float-3" aria-hidden="true">
+          <svg viewBox="0 0 44 44"><path d="M22 37S6 27 6 15.5A9.5 9.5 0 0122 9a9.5 9.5 0 0116 6.5C38 27 22 37 22 37z"/></svg>
         </div>
+
+        <!-- Camera illustration: tap or hover the lens to open the shutter -->
+        <svg class="hero-camera" viewBox="0 0 400 340" role="img" aria-label="איור של מצלמה מעוצבת" tabindex="0">
+          <defs>
+            <linearGradient id="hcBodyGradient" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#3A332C"/>
+              <stop offset="100%" stop-color="#2B2723"/>
+            </linearGradient>
+            <radialGradient id="hcLensGradient" cx="42%" cy="38%" r="70%">
+              <stop offset="0%" stop-color="#4A443D"/>
+              <stop offset="55%" stop-color="#2B2723"/>
+              <stop offset="100%" stop-color="#17140F"/>
+            </radialGradient>
+            <radialGradient id="hcFlareGradient" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#FBF8F3" stop-opacity="0.95"/>
+              <stop offset="100%" stop-color="#FBF8F3" stop-opacity="0"/>
+            </radialGradient>
+          </defs>
+          <rect class="hc-strap" x="60" y="98" width="280" height="22" rx="11"/>
+          <rect class="hc-bump" x="152" y="60" width="96" height="44" rx="12"/>
+          <ellipse class="hc-shutter-btn" cx="142" cy="82" rx="15" ry="9"/>
+          <rect class="hc-flash" x="262" y="70" width="32" height="22" rx="6"/>
+          <rect class="hc-body" x="55" y="108" width="290" height="184" rx="30"/>
+          <circle class="hc-dot" cx="88" cy="140" r="6"/>
+          <circle class="hc-dot" cx="312" cy="140" r="6"/>
+
+          <g class="hc-lens-group">
+            <circle class="hc-lens-outer" cx="200" cy="216" r="76"/>
+            <circle class="hc-lens-mid" cx="200" cy="216" r="58"/>
+            <circle class="hc-lens-glass" cx="200" cy="216" r="30"/>
+            <g class="hc-aperture">
+              <polygon class="hc-blade hc-blade--a" points="200,216 189,158 211,158" transform="rotate(0 200 216)"/>
+              <polygon class="hc-blade hc-blade--b" points="200,216 189,158 211,158" transform="rotate(60 200 216)"/>
+              <polygon class="hc-blade hc-blade--a" points="200,216 189,158 211,158" transform="rotate(120 200 216)"/>
+              <polygon class="hc-blade hc-blade--b" points="200,216 189,158 211,158" transform="rotate(180 200 216)"/>
+              <polygon class="hc-blade hc-blade--a" points="200,216 189,158 211,158" transform="rotate(240 200 216)"/>
+              <polygon class="hc-blade hc-blade--b" points="200,216 189,158 211,158" transform="rotate(300 200 216)"/>
+            </g>
+            <circle class="hc-flare" cx="178" cy="194" r="9"/>
+          </g>
+        </svg>
       </div>
-      <div class="hidden sm:flex absolute -bottom-8 -right-8 items-center gap-3 bg-white/95 backdrop-blur rounded-2xl shadow-2xl px-6 py-4">
+      <div class="hidden sm:flex items-center gap-3 bg-white/95 backdrop-blur rounded-2xl shadow-2xl px-6 py-4 mx-auto mt-8 max-w-xs">
         <div class="flex text-gold">
           <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M10 1l2.6 6.3 6.8.5-5.2 4.5 1.7 6.7L10 15.7 4.1 19l1.7-6.7L.6 7.8l6.8-.5L10 1z"/></svg>
         </div>
@@ -186,68 +220,6 @@
 
     <!-- Grid (populated by script.js) -->
     <div id="gallery-grid" class="grid grid-cols-2 md:grid-cols-3 gap-4 sm:gap-5"></div>
-  </div>
-</section>
-
-<!-- ================= VISION BOARD BUILDER ================= -->
-<section id="vision-board" class="py-16 sm:py-24 lg:py-32 bg-beige/40">
-  <div class="max-w-6xl mx-auto px-5 sm:px-8">
-
-    <div class="text-center max-w-2xl mx-auto mb-14" data-reveal>
-      <span class="section-label">בנו את הסגנון שלכם</span>
-      <h2 class="section-title">לוח ההשראה האישי שלכם</h2>
-      <p class="section-subtitle">בחרו עד 5 סגנונות שמדברים אליכם, וקבלו תצוגה מקדימה של האווירה שנעצב יחד — ושלחו לי אותה ישירות לוואטסאפ.</p>
-    </div>
-
-    <!-- Style tiles grid -->
-    <div id="vision-grid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-5 mb-6" data-reveal></div>
-
-    <p class="text-center text-sm text-charcoal-light mb-16 transition-opacity duration-300" id="vision-limit-note">
-      נבחרו <span id="vision-count" class="font-semibold text-charcoal">0</span>/5 סגנונות
-    </p>
-
-    <!-- Live moodboard canvas -->
-    <div class="grid lg:grid-cols-5 gap-8 items-start" data-reveal>
-
-      <div class="lg:col-span-3">
-        <div id="moodboard-card" class="moodboard-card">
-
-          <!-- Empty state -->
-          <div id="moodboard-empty" class="moodboard-empty">
-            <svg class="w-10 h-10 mb-3 text-gold-light" fill="none" stroke="currentColor" stroke-width="1.4" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="10" rx="1.5"/><rect x="3" y="13" width="7" height="8" rx="1.5"/><rect x="14" y="16" width="7" height="5" rx="1.5"/></svg>
-            <p class="text-charcoal-light text-sm max-w-xs">בחרו סגנונות מהרשימה למעלה כדי לראות כאן את לוח ההשראה האישי שלכם</p>
-          </div>
-
-          <!-- Filled state -->
-          <div id="moodboard-filled" class="hidden">
-            <div class="flex items-center justify-between mb-5">
-              <h3 class="font-serif text-xl">הלוח שלכם</h3>
-              <button id="moodboard-clear" type="button" class="text-xs text-charcoal-light hover:text-gold transition underline underline-offset-2">נקו הכל</button>
-            </div>
-            <div id="moodboard-swatches" class="moodboard-swatches"></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="lg:col-span-2 lg:sticky lg:top-28">
-        <div class="bg-white rounded-2xl shadow-lg p-6 sm:p-8">
-          <span class="section-label !mb-3">האבחנה שלנו</span>
-          <p id="vision-summary" class="font-serif text-xl sm:text-2xl leading-snug text-charcoal mb-6">
-            הסגנון שלכם עוד לא הצטייר — התחילו לבחור למעלה ✨
-          </p>
-          <a id="vision-whatsapp" href="#" target="_blank" rel="noopener" class="vision-whatsapp-btn is-disabled">
-            <span class="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center shrink-0">
-              <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.29-1.39a9.87 9.87 0 004.75 1.21h.01c5.46 0 9.9-4.45 9.9-9.91C21.96 6.45 17.5 2 12.04 2zm0 18.14a8.2 8.2 0 01-4.19-1.15l-.3-.18-3.13.82.84-3.06-.2-.31a8.2 8.2 0 01-1.26-4.35c0-4.55 3.7-8.24 8.25-8.24 4.55 0 8.24 3.7 8.24 8.24 0 4.55-3.7 8.23-8.25 8.23zm4.52-6.16c-.25-.12-1.47-.72-1.7-.81-.23-.08-.39-.12-.56.12-.17.25-.64.81-.78.97-.14.17-.29.19-.54.06-.25-.12-1.04-.38-1.98-1.22-.73-.65-1.22-1.45-1.37-1.7-.14-.25-.02-.38.11-.5.11-.11.25-.29.37-.43.12-.14.16-.25.25-.41.08-.17.04-.31-.02-.44-.06-.12-.56-1.35-.77-1.84-.2-.48-.41-.42-.56-.42-.14-.01-.31-.01-.48-.01-.17 0-.44.06-.67.31-.23.25-.87.85-.87 2.08 0 1.22.89 2.4 1.02 2.57.12.17 1.75 2.67 4.24 3.75.59.26 1.06.41 1.42.52.6.19 1.14.16 1.57.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.08.14-1.18-.06-.11-.23-.17-.48-.29z"/></svg>
-            </span>
-            <span>
-              <span class="block font-medium">שליחת לוח ההשראה בוואטסאפ</span>
-              <span id="vision-whatsapp-sub" class="block text-sm text-white/85">בחרו סגנון אחד לפחות כדי לשלוח</span>
-            </span>
-          </a>
-        </div>
-      </div>
-
-    </div>
   </div>
 </section>
 
@@ -590,7 +562,6 @@
         <p class="font-medium text-cream mb-4">ניווט מהיר</p>
         <ul class="space-y-2 text-sm">
           <li><a href="#gallery" class="footer-link">גלריה</a></li>
-          <li><a href="#vision-board" class="footer-link">בנו את הסגנון שלכם</a></li>
           <li><a href="#about" class="footer-link">אודות</a></li>
           <li><a href="#packages" class="footer-link">חבילות צילום</a></li>
           <li><a href="#testimonials" class="footer-link">המלצות</a></li>

@@ -1,15 +1,15 @@
 /* =========================================================
    Maya Cohen Photography — Landing Page Behaviors
    Sections: header, mobile menu, scroll reveal, gallery filter,
-   vision board builder, testimonials carousel, contact form.
+   testimonials carousel, contact form.
    ========================================================= */
 
 document.addEventListener('DOMContentLoaded', () => {
   initHeader();
   initMobileMenu();
   initScrollReveal();
+  initHeroCamera();
   initGallery();
-  initVisionBoard();
   initTestimonials();
   initContactForm();
   initBackToTop();
@@ -78,6 +78,22 @@ function initScrollReveal() {
   items.forEach((el) => observer.observe(el));
 }
 
+/* ---------------- Hero camera: tap fallback for the shutter animation ----------------
+   :hover already opens the aperture on pointer devices; this just gives
+   touch screens (no hover) a tap-triggered replay of the same CSS transition. */
+function initHeroCamera() {
+  const lens = document.querySelector('.hc-lens-group');
+  if (!lens) return;
+
+  lens.addEventListener('click', () => {
+    lens.classList.remove('is-open');
+    void lens.offsetWidth;
+    lens.classList.add('is-open');
+    clearTimeout(lens._hcTimer);
+    lens._hcTimer = setTimeout(() => lens.classList.remove('is-open'), 900);
+  });
+}
+
 /* ---------------- Gallery data + rendering + filter ---------------- */
 /* No real photos yet, so each slot renders a category-coded gradient
    placeholder instead. Swap in real <img> tags once photos are ready. */
@@ -140,186 +156,6 @@ function initGallery() {
       });
     });
   });
-}
-
-/* ---------------- Vision Board / Moodboard Builder ---------------- */
-const VISION_STYLES = [
-  {
-    id: 'sunset',
-    label: 'תאורת שקיעה חמה',
-    desc: 'אור זהוב ורך של שעת הזהב',
-    moods: ['חם', 'רומנטי'],
-    from: '#E8C99B', to: '#C97B4A',
-    icon: '<circle cx="12" cy="15" r="4"/><path stroke-linecap="round" d="M3 19h18M12 3v3M5.6 8.6l1.4 1.4M18.4 8.6L17 10"/>',
-  },
-  {
-    id: 'studio',
-    label: 'סטודיו נקי ומינימליסטי',
-    desc: 'רקע אחיד, קווים נקיים ואור מבוקר',
-    moods: ['מסוגנן', 'נקי'],
-    from: '#F2ECE0', to: '#C9BEA6',
-    icon: '<rect x="4" y="4" width="16" height="16" rx="3"/><circle cx="12" cy="12" r="3.2"/>',
-  },
-  {
-    id: 'rustic',
-    label: 'עיצוב כפרי ואביזרים',
-    desc: 'עץ, פשתן וטקסטורות טבעיות',
-    moods: ['כפרי', 'נוסטלגי'],
-    from: '#B08968', to: '#6B4A32',
-    icon: '<path stroke-linecap="round" stroke-linejoin="round" d="M12 3v14M12 3C9 5 7 7.5 7 10.5S9 15 12 15c3 0 5-1.5 5-4.5S15 5 12 3z"/><path stroke-linecap="round" d="M9 21h6"/>',
-  },
-  {
-    id: 'candid',
-    label: 'רגעים ספונטניים וטבעיים',
-    desc: 'תיעוד אמיתי בלי פוזות מאולצות',
-    moods: ['טבעי', 'אותנטי'],
-    from: '#CBBF9C', to: '#8C9A5B',
-    icon: '<path stroke-linecap="round" stroke-linejoin="round" d="M12 21c-4-4-8-7.5-8-12a5 5 0 019-3 5 5 0 019 3c0 4.5-4 8-8 12z"/>',
-  },
-  {
-    id: 'minimalist',
-    label: 'מינימליזם וחלל ריק',
-    desc: 'מעט אלמנטים, הרבה נשימה חזותית',
-    moods: ['שקט', 'מאופק'],
-    from: '#E7E3DA', to: '#A79E90',
-    icon: '<circle cx="12" cy="12" r="3"/>',
-  },
-  {
-    id: 'pastel',
-    label: 'גווני פסטל רכים',
-    desc: 'ורוד אבק, מנטה ולבנדר עדינים',
-    moods: ['רך', 'חלומי'],
-    from: '#F3D9DF', to: '#CBB8DE',
-    icon: '<path stroke-linecap="round" stroke-linejoin="round" d="M12 21s7-4.5 7-10a7 7 0 00-14 0c0 5.5 7 10 7 10z"/>',
-  },
-  {
-    id: 'bw',
-    label: 'שחור-לבן קלאסי',
-    desc: 'דרמה, ניגודיות וזמניות-על',
-    moods: ['דרמטי', 'קלאסי'],
-    from: '#2B2723', to: '#B7B2A9',
-    icon: '<circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 000 16z"/>',
-  },
-  {
-    id: 'outdoor',
-    label: 'טבע וחוץ פתוח',
-    desc: 'אור יום, ירוק ונופים פתוחים',
-    moods: ['פתוח', 'רענן'],
-    from: '#9CAF88', to: '#4F6F52',
-    icon: '<path stroke-linecap="round" stroke-linejoin="round" d="M3 21l6-11 4 6 3-4 5 9H3z"/>',
-  },
-];
-
-const VISION_MAX = 5;
-let selectedVisionIds = [];
-
-function initVisionBoard() {
-  const grid = document.getElementById('vision-grid');
-  if (!grid) return;
-
-  grid.innerHTML = VISION_STYLES.map((style) => `
-    <button type="button" class="style-tile" data-style-id="${style.id}" style="--tile-gradient: linear-gradient(160deg, ${style.from}, ${style.to});">
-      <span class="tile-check">
-        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
-      </span>
-      <span class="tile-icon">
-        <svg class="w-[18px] h-[18px]" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24">${style.icon}</svg>
-      </span>
-      <span class="tile-title">${style.label}</span>
-      <span class="tile-desc">${style.desc}</span>
-    </button>
-  `).join('');
-
-  grid.addEventListener('click', (e) => {
-    const tile = e.target.closest('.style-tile');
-    if (!tile) return;
-    toggleVisionStyle(tile.dataset.styleId, tile);
-  });
-
-  const clearBtn = document.getElementById('moodboard-clear');
-  clearBtn.addEventListener('click', () => {
-    selectedVisionIds = [];
-    renderVisionBoard();
-  });
-
-  renderVisionBoard();
-}
-
-function toggleVisionStyle(id, tileEl) {
-  const isSelected = selectedVisionIds.includes(id);
-
-  if (!isSelected && selectedVisionIds.length >= VISION_MAX) {
-    tileEl.classList.remove('is-shaking');
-    void tileEl.offsetWidth;
-    tileEl.classList.add('is-shaking');
-    return;
-  }
-
-  selectedVisionIds = isSelected
-    ? selectedVisionIds.filter((sid) => sid !== id)
-    : [...selectedVisionIds, id];
-
-  renderVisionBoard();
-}
-
-function joinHebrewList(words) {
-  if (words.length === 0) return '';
-  if (words.length === 1) return words[0];
-  return `${words.slice(0, -1).join(', ')} ו${words[words.length - 1]}`;
-}
-
-function renderVisionBoard() {
-  const grid = document.getElementById('vision-grid');
-  const countEl = document.getElementById('vision-count');
-  const emptyEl = document.getElementById('moodboard-empty');
-  const filledEl = document.getElementById('moodboard-filled');
-  const swatchesEl = document.getElementById('moodboard-swatches');
-  const summaryEl = document.getElementById('vision-summary');
-  const whatsappBtn = document.getElementById('vision-whatsapp');
-  const whatsappSub = document.getElementById('vision-whatsapp-sub');
-
-  const selectedStyles = selectedVisionIds
-    .map((id) => VISION_STYLES.find((s) => s.id === id))
-    .filter(Boolean);
-
-  // Tile visual state
-  grid.querySelectorAll('.style-tile').forEach((tile) => {
-    const id = tile.dataset.styleId;
-    const selected = selectedVisionIds.includes(id);
-    tile.classList.toggle('is-selected', selected);
-    tile.classList.toggle('is-disabled', !selected && selectedVisionIds.length >= VISION_MAX);
-  });
-
-  countEl.textContent = selectedVisionIds.length;
-
-  if (selectedStyles.length === 0) {
-    emptyEl.classList.remove('hidden');
-    filledEl.classList.add('hidden');
-    summaryEl.textContent = 'הסגנון שלכם עוד לא הצטייר — התחילו לבחור למעלה ✨';
-    whatsappBtn.classList.add('is-disabled');
-    whatsappBtn.removeAttribute('href');
-    whatsappSub.textContent = 'בחרו סגנון אחד לפחות כדי לשלוח';
-    return;
-  }
-
-  emptyEl.classList.add('hidden');
-  filledEl.classList.remove('hidden');
-
-  swatchesEl.innerHTML = selectedStyles.map((style, i) => `
-    <div class="moodboard-swatch${i === 0 ? ' is-featured' : ''}" style="--tile-gradient: linear-gradient(160deg, ${style.from}, ${style.to}); animation-delay: ${i * 60}ms;">
-      <span>${style.label}</span>
-    </div>
-  `).join('');
-
-  const moods = [...new Set(selectedStyles.flatMap((s) => s.moods))].slice(0, 4);
-  summaryEl.innerHTML = `הסגנון שלכם: <span class="text-gold font-medium">${joinHebrewList(moods)}</span>`;
-
-  whatsappBtn.classList.remove('is-disabled');
-  whatsappSub.textContent = `${selectedStyles.length} סגנונות נבחרו — לחצו לשליחה`;
-
-  const styleList = selectedStyles.map((s) => `• ${s.label}`).join('\n');
-  const message = `היי מאיה! 👋 בניתי לוח השראה אישי לצילומים שלי, אלה הסגנונות שדיברו אליי:\n\n${styleList}\n\nהסגנון שלי: ${joinHebrewList(moods)}\n\nאשמח לשמוע פרטים נוספים ולתאם צילומים! 📸`;
-  whatsappBtn.href = `https://wa.me/972500000000?text=${encodeURIComponent(message)}`;
 }
 
 /* ---------------- Testimonials carousel ---------------- */
