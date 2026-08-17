@@ -1,0 +1,45 @@
+{
+  "gallery": [
+    { "category": "family", "image": "" },
+    { "category": "newborn", "image": "" },
+    { "category": "portrait", "image": "" },
+    { "category": "event", "image": "" },
+    { "category": "family", "image": "" },
+    { "category": "portrait", "image": "" },
+    { "category": "newborn", "image": "" },
+    { "category": "event", "image": "" },
+    { "category": "family", "image": "" },
+    { "category": "portrait", "image": "" },
+    { "category": "event", "image": "" },
+    { "category": "newborn", "image": "" }
+  ],
+  "about": {
+    "photo": ""
+  },
+  "testimonials": [
+    {
+      "quote": "מאיה תפסה רגעים שלא ידענו שאנחנו צריכים. הילדים הרגישו בנוח לגמרי, והתוצאה הסופית פשוט מרגשת אותנו מחדש בכל פעם שאנחנו מסתכלים באלבום.",
+      "name": "נועה ואיתן לוי",
+      "role": "צילומי משפחה",
+      "initials": "נ.א",
+      "colorFrom": "#C9A66B",
+      "colorTo": "#8C6B3F"
+    },
+    {
+      "quote": "הצילומים של הניו-בורן יצאו מדהימים. מאיה הייתה סבלנית, רגועה ומקצועית לאורך כל הסשן. ממליצה בחום לכל זוג טרי!",
+      "name": "שירה בן־דוד",
+      "role": "צילומי ניו-בורן",
+      "initials": "ש.ב",
+      "colorFrom": "#B4894F",
+      "colorTo": "#4A443D"
+    },
+    {
+      "quote": "שכרנו את מאיה לצילומי האירוע המשפחתי שלנו וזו הייתה ההחלטה הכי טובה. התמונות תפסו בדיוק את האווירה והרגש של הערב.",
+      "name": "משפחת אברהמי",
+      "role": "צילומי אירועים",
+      "initials": "מ.א",
+      "colorFrom": "#8C7B63",
+      "colorTo": "#2B2723"
+    }
+  ]
+}

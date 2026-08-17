@@ -4,13 +4,16 @@
    testimonials carousel, contact form.
    ========================================================= */
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
+  const content = await loadSiteContent();
+
   initHeader();
   initMobileMenu();
   initScrollReveal();
   initHeroCamera();
-  initGallery();
-  initTestimonials();
+  initGallery(content.gallery);
+  initAbout(content.about);
+  initTestimonials(content.testimonials);
   initContactForm();
   initBackToTop();
   initSourceProtection();
@@ -19,6 +22,31 @@ document.addEventListener('DOMContentLoaded', () => {
   const dateField = document.getElementById('date');
   if (dateField) dateField.min = new Date().toISOString().split('T')[0];
 });
+
+/* ---------------- Site content (editable by the client via /admin) ---------------- */
+/* Loads content/site-content.json (images + testimonials, kept up to date via the
+   Decap CMS admin panel). Falls back to the hardcoded defaults below if the file
+   is missing or unreachable (e.g. opening index.html directly without a server). */
+async function loadSiteContent() {
+  const fallback = {
+    gallery: GALLERY_ITEMS.map((category) => ({ category, image: '' })),
+    about: {},
+    testimonials: DEFAULT_TESTIMONIALS,
+  };
+
+  try {
+    const res = await fetch('content/site-content.json', { cache: 'no-store' });
+    if (!res.ok) throw new Error('site-content.json not found');
+    const data = await res.json();
+    return {
+      gallery: Array.isArray(data.gallery) && data.gallery.length ? data.gallery : fallback.gallery,
+      about: data.about || fallback.about,
+      testimonials: Array.isArray(data.testimonials) && data.testimonials.length ? data.testimonials : fallback.testimonials,
+    };
+  } catch (err) {
+    return fallback;
+  }
+}
 
 /* ---------------- Header: solid background on scroll ---------------- */
 function initHeader() {
@@ -96,8 +124,8 @@ function initHeroCamera() {
 }
 
 /* ---------------- Gallery data + rendering + filter ---------------- */
-/* No real photos yet, so each slot renders a category-coded gradient
-   placeholder instead. Swap in real <img> tags once photos are ready. */
+/* Each item renders a real <img> when content/site-content.json provides one,
+   otherwise falls back to a category-coded gradient placeholder. */
 const GALLERY_CATEGORY_META = {
   family: {
     label: 'צילומי משפחה',
@@ -127,17 +155,20 @@ const GALLERY_ITEMS = [
   'family', 'portrait', 'event', 'newborn',
 ];
 
-function initGallery() {
+function initGallery(items) {
   const grid = document.getElementById('gallery-grid');
 
-  grid.innerHTML = GALLERY_ITEMS.map((category) => {
-    const meta = GALLERY_CATEGORY_META[category];
-    return `
-    <div class="gallery-item aspect-[4/5]" data-category="${category}">
-      <div class="photo-placeholder" style="--ph-gradient: linear-gradient(155deg, ${meta.from}, ${meta.to});">
+  grid.innerHTML = items.map(({ category, image }) => {
+    const meta = GALLERY_CATEGORY_META[category] || GALLERY_CATEGORY_META.family;
+    const media = image
+      ? `<img src="${image}" alt="${meta.label}" class="w-full h-full object-cover" loading="lazy">`
+      : `<div class="photo-placeholder" style="--ph-gradient: linear-gradient(155deg, ${meta.from}, ${meta.to});">
         <svg class="ph-icon" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24">${meta.icon}</svg>
         <span class="gallery-tag">${meta.label}</span>
-      </div>
+      </div>`;
+    return `
+    <div class="gallery-item aspect-[4/5]" data-category="${category}">
+      ${media}
     </div>
   `;
   }).join('');
@@ -159,11 +190,53 @@ function initGallery() {
   });
 }
 
+/* ---------------- About photo ---------------- */
+function initAbout(about) {
+  const wrap = document.getElementById('about-photo-wrap');
+  if (!wrap || !about || !about.photo) return;
+  wrap.innerHTML = `<img src="${about.photo}" alt="תמונת הצלמת" class="w-full h-full object-cover" loading="lazy">`;
+}
+
 /* ---------------- Testimonials carousel ---------------- */
-function initTestimonials() {
+const STAR_ICON = '<svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M10 1l2.6 6.3 6.8.5-5.2 4.5 1.7 6.7L10 15.7 4.1 19l1.7-6.7L.6 7.8l6.8-.5L10 1z"/></svg>';
+
+const DEFAULT_TESTIMONIALS = [
+  {
+    quote: 'מאיה תפסה רגעים שלא ידענו שאנחנו צריכים. הילדים הרגישו בנוח לגמרי, והתוצאה הסופית פשוט מרגשת אותנו מחדש בכל פעם שאנחנו מסתכלים באלבום.',
+    name: 'נועה ואיתן לוי', role: 'צילומי משפחה', initials: 'נ.א', colorFrom: '#C9A66B', colorTo: '#8C6B3F',
+  },
+  {
+    quote: 'הצילומים של הניו-בורן יצאו מדהימים. מאיה הייתה סבלנית, רגועה ומקצועית לאורך כל הסשן. ממליצה בחום לכל זוג טרי!',
+    name: 'שירה בן־דוד', role: 'צילומי ניו-בורן', initials: 'ש.ב', colorFrom: '#B4894F', colorTo: '#4A443D',
+  },
+  {
+    quote: 'שכרנו את מאיה לצילומי האירוע המשפחתי שלנו וזו הייתה ההחלטה הכי טובה. התמונות תפסו בדיוק את האווירה והרגש של הערב.',
+    name: 'משפחת אברהמי', role: 'צילומי אירועים', initials: 'מ.א', colorFrom: '#8C7B63', colorTo: '#2B2723',
+  },
+];
+
+function initTestimonials(testimonials) {
   const track = document.getElementById('testimonial-slides');
+
+  track.innerHTML = testimonials.map((t) => `
+    <div class="testimonial-slide">
+      <div class="testimonial-card">
+        <div class="flex justify-center gap-1 text-gold mb-5">${STAR_ICON.repeat(5)}</div>
+        <p class="text-lg sm:text-xl leading-relaxed font-serif mb-8">"${t.quote}"</p>
+        <div class="flex items-center justify-center gap-3">
+          <span class="avatar-initials" style="--ph-gradient: linear-gradient(155deg, ${t.colorFrom}, ${t.colorTo});" aria-hidden="true">${t.initials}</span>
+          <div class="text-right">
+            <p class="font-medium">${t.name}</p>
+            <p class="text-xs text-cream/60">${t.role}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  `).join('');
+
   const slides = track.querySelectorAll('.testimonial-slide');
   const dotsContainer = document.getElementById('testimonial-dots');
+  dotsContainer.innerHTML = '';
   let index = 0;
   let autoplayTimer;
 

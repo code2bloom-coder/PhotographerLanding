@@ -1,0 +1,79 @@
+backend:
+  name: github
+  repo: code2bloom-coder/PhotographerLanding
+  branch: main
+  base_url: https://photographerlanding-cms-auth.code2bloom.workers.dev
+
+# מאפשר לבדוק את הפאנל מקומית (npx decap-server) בלי GitHub/OAuth בכלל.
+# לא משפיע על ההתנהגות באתר החי - שם המשתמשת תמיד תתחבר עם GitHub.
+local_backend: true
+
+# תמונות שמועלות דרך הפאנל נשמרות כאן, וזמינות באתר תחת /assets/images/uploads/...
+media_folder: "assets/images/uploads"
+public_folder: "/assets/images/uploads"
+
+locale: "he"
+
+collections:
+  - name: "site-content"
+    label: "תוכן האתר"
+    files:
+      - name: "content"
+        label: "תמונות ותגובות"
+        file: "content/site-content.json"
+        fields:
+          - label: "גלריית תמונות"
+            name: "gallery"
+            widget: "list"
+            summary: "{{fields.category}}"
+            fields:
+              - label: "קטגוריה"
+                name: "category"
+                widget: "select"
+                options:
+                  - { label: "צילומי משפחה", value: "family" }
+                  - { label: "ניו-בורן", value: "newborn" }
+                  - { label: "פורטרטים", value: "portrait" }
+                  - { label: "אירועים", value: "event" }
+              - label: "תמונה"
+                name: "image"
+                widget: "image"
+                required: false
+                hint: "אם לא תעלו תמונה, יוצג עיצוב זמני במקום."
+
+          - label: "אודות"
+            name: "about"
+            widget: "object"
+            fields:
+              - label: "תמונת הצלמת"
+                name: "photo"
+                widget: "image"
+                required: false
+
+          - label: "תגובות לקוחות"
+            name: "testimonials"
+            widget: "list"
+            summary: "{{fields.name}}"
+            fields:
+              - label: "תוכן ההמלצה"
+                name: "quote"
+                widget: "text"
+              - label: "שם הלקוח/ה"
+                name: "name"
+                widget: "string"
+              - label: "סוג הצילום"
+                name: "role"
+                widget: "string"
+                hint: "לדוגמה: צילומי משפחה, ניו-בורן, אירועים"
+              - label: "ראשי תיבות (לעיגול הצבעוני)"
+                name: "initials"
+                widget: "string"
+                hint: "עד 2 אותיות, לדוגמה: נ.א"
+              - label: "צבע התחלה"
+                name: "colorFrom"
+                widget: "color"
+                default: "#C9A66B"
+              - label: "צבע סיום"
+                name: "colorTo"
+                widget: "color"
+                default: "#2B2723"
