@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initTestimonials();
   initContactForm();
   initBackToTop();
+  initSourceProtection();
   document.getElementById('year').textContent = new Date().getFullYear();
 
   const dateField = document.getElementById('date');
@@ -275,4 +276,22 @@ function initBackToTop() {
     { passive: true }
   );
   btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+}
+
+/* ---------------- Source protection (deterrent only — not real security) ---------------- */
+function initSourceProtection() {
+  document.addEventListener('contextmenu', (e) => e.preventDefault());
+
+  document.addEventListener('keydown', (e) => {
+    const key = e.key.toLowerCase();
+    const isDevToolsCombo =
+      e.key === 'F12' ||
+      (e.ctrlKey && e.shiftKey && ['i', 'j', 'c'].includes(key)) ||
+      (e.ctrlKey && key === 'u');
+    if (isDevToolsCombo) e.preventDefault();
+  });
+
+  document.querySelectorAll('img').forEach((img) => {
+    img.addEventListener('dragstart', (e) => e.preventDefault());
+  });
 }
